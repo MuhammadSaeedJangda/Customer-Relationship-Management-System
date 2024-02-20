@@ -3,6 +3,7 @@ import 'registration.dart';
 import 'login.dart';
 import 'crm.dart';
 import 'user.dart';
+import 'customerupdate.dart';
 
 void main() {
   print("WELCOME TO CUSTOMER RELATIONSHIP MANAGEMENT SYSTEM");
@@ -62,6 +63,17 @@ void main() {
     // Display customers
     print("--------- Customer Display Section ---------");
     myCRM.displayCustomers();
+  } else {
+    print("Login failed. Please check your email and password.");
+  }
+
+  // Ask if the user wants to update customer details
+  print("Do you want to update customer details? (yes/no)");
+  String updateOption = stdin.readLineSync()!.toLowerCase();
+
+  if (updateOption == 'yes') {
+    // Run the update function
+    updateCustomerDetails(loggedInUser!, myCRM);
   } else {
     print("Login failed. Please check your email and password.");
   }
