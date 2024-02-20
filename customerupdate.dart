@@ -21,11 +21,19 @@ void updateCustomerDetails(User loggedInUser, CRM myCRM) {
   }
 
   if (customerToUpdate != null) {
-    // Ask for the details to update
+    // Update the customer Name details
+    print("Enter updated Name: ");
+    String updatedName = stdin.readLineSync()!;
+    customerToUpdate.phoneNumber = updatedName;
+
+    // Update the customer Email details
+    print("Enter updated Email: ");
+    String updatedEmail = stdin.readLineSync()!;
+    customerToUpdate.phoneNumber = updatedEmail;
+
+    // Update the customer Phone Number details
     print("Enter updated Phone Number: ");
     String updatedPhoneNumber = stdin.readLineSync()!;
-
-    // Update the customer details
     customerToUpdate.phoneNumber = updatedPhoneNumber;
 
     print("Customer details updated successfully!");

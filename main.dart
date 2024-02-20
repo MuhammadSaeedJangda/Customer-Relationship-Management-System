@@ -1,20 +1,23 @@
 import 'dart:io';
+import 'customer.dart';
 import 'registration.dart';
 import 'login.dart';
 import 'crm.dart';
 import 'user.dart';
 import 'customerupdate.dart';
+import 'customerdelete.dart';
+
+User? loggedInUser;
+CRM myCRM = CRM();
 
 void main() {
   print("WELCOME TO CUSTOMER RELATIONSHIP MANAGEMENT SYSTEM");
   Registration registration = Registration();
   Login login = Login(registration.userList);
-  CRM myCRM = CRM();
-  User? loggedInUser;
 
   print("---------------------------------------------------");
 
-  //For User Registration
+  // For User Registration
   print("---------- KINDLY REGISTER YOURSELF FIRST ---------");
   stdout.write("Enter Your Name: ");
   String name = stdin.readLineSync()!;
@@ -37,11 +40,16 @@ void main() {
   String loginPassword = stdin.readLineSync()!;
 
   login.loginUser(loginEmail, loginPassword);
+  loggedInUser = login.loginUser(loginEmail, loginPassword);
   print("------------- THANKS FOR LOGIN -------------");
 
-  loggedInUser = login.loginUser(loginEmail, loginPassword);
+  // Call functions here as needed
+  addNewCustomer(loggedInUser, myCRM);
+  updateFunction(loggedInUser, myCRM);
+}
 
-  // If the user is logged in, allow adding a new customer
+// If the user is logged in, allow adding a new customer
+void addNewCustomer(User? loggedInUser, CRM myCRM) {
   if (loggedInUser != null && loggedInUser.name.isNotEmpty) {
     print("--------- Enter customer details: ---------");
     print("Name: ");
@@ -57,8 +65,7 @@ void main() {
     String customerCountry = stdin.readLineSync()!;
 
     // Add the new customer
-    myCRM.addCustomer(loggedInUser, customerName, customerEmail,
-        customerPhoneNumber, customerCountry);
+    myCRM.addCustomer(loggedInUser, customerName, customerEmail, customerPhoneNumber, customerCountry);
 
     // Display customers
     print("--------- Customer Display Section ---------");
@@ -66,8 +73,10 @@ void main() {
   } else {
     print("Login failed. Please check your email and password.");
   }
+}
 
-  // Ask if the user wants to update customer details
+// Ask if the user wants to update customer details
+void updateFunction(User? loggedInUser, CRM myCRM) {
   print("Do you want to update customer details? (yes/no)");
   String updateOption = stdin.readLineSync()!.toLowerCase();
 
@@ -77,4 +86,18 @@ void main() {
   } else {
     print("Login failed. Please check your email and password.");
   }
+  print("------------------------------------------------------");
 }
+
+// New method to delete a customer
+void deleteCustomer(User? user, Customer customer) {
+  // Checking Answer Of User & Then Run The Function
+  if (user != null) {
+    myCRM.customerList.remove(customer);
+    print("Customer deleted successfully!");
+  } else {
+    print("User not authenticated. Cannot delete customer.");
+  }
+}
+
+addNewCustomer(User? loggedInUser, CRM myCRM);
