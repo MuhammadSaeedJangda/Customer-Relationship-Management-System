@@ -65,7 +65,8 @@ void addNewCustomer(User? loggedInUser, CRM myCRM) {
     String customerCountry = stdin.readLineSync()!;
 
     // Add the new customer
-    myCRM.addCustomer(loggedInUser, customerName, customerEmail, customerPhoneNumber, customerCountry);
+    myCRM.addCustomer(loggedInUser, customerName, customerEmail,
+        customerPhoneNumber, customerCountry);
 
     // Display customers
     print("--------- Customer Display Section ---------");
@@ -99,5 +100,3 @@ void deleteCustomer(User? user, Customer customer) {
     print("User not authenticated. Cannot delete customer.");
   }
 }
-
-addNewCustomer(User? loggedInUser, CRM myCRM);
